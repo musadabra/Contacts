@@ -36,8 +36,8 @@ public class BasicAuthSecurityConfig extends WebSecurityConfigurerAdapter {
         // Disable CSRF
         http.csrf().disable()
                 .authorizeRequests()
-                // Allow all users to access auth url
-                .antMatchers("/api/auth")
+                // Allow all users to access auth url and API Documentation.
+                .antMatchers("/api/auth","/swagger-ui.html")
                 .permitAll()
                 // Authentication needed for any other request
                 .anyRequest()

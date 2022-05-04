@@ -40,6 +40,12 @@ public class UserMessageService {
         String to = message.getTo();
         String stopId = from+"_"+to;
         
+         // Save in Redis
+        Stop stopObj = new Stop();
+        stopObj.setId(stopId);
+        stopObj.setFrom(from);
+        stopObj.setTo(to);
+        
         // Find the phone number if it exist
         PhoneNumber phoneNumber = phoneNumberRepository.findByNumber(message.getTo());
         if(phoneNumber == null)
@@ -50,7 +56,7 @@ public class UserMessageService {
             return new AppResponse("", "To parameter not found");
         
         // Check if From, To pair exist
-        boolean existToFrom = stopRepository.findStopByToFrom(stopId);
+        boolean existToFrom = stopRepository.findStopByToFrom(stopObj);
         if(existToFrom)
             return new AppResponse("", "Alread Saved STOP");
         
@@ -58,14 +64,8 @@ public class UserMessageService {
         String stopRegex = "(STOP|stop)\\s*\\n*";
         boolean messageContainStop = message.getText().matches(stopRegex);
         if(!messageContainStop)
-            return new AppResponse("\"STOP\" MATCH found", "");
+            return new AppResponse("'STOP' MATCH not found in text", "");
        
-        // Save in Redis
-        Stop stopObj = new Stop();
-        stopObj.setId(stopId);
-        stopObj.setFrom(from);
-        stopObj.setTo(to);
-        
         // Try saving and catch errors if any and send response.
         try {
             // Save Stop with expiration after 4 hours.
@@ -92,19 +92,18 @@ public class UserMessageService {
         // Return error if To number not for logged in user.
         if(phoneNumber.getAccount().getId() != userId)
             return new AppResponse("", "From parameter not found.");
-        
-        
-        // Check if To, From pair exist, return error
-        boolean existToFrom = stopRepository.findStopByToFrom(stopId);
-        if(existToFrom)
-            return new AppResponse("", "SMS From "+from+" to"+to+" blocked by STOP request.");
-        
+         
         // Create STOP OBJECT
         Stop stopObj = new Stop();
         stopObj.setId(stopId);
         stopObj.setFrom(from);
         stopObj.setTo(to);
         
+        // Check if To, From pair exist, return error
+        boolean existToFrom = stopRepository.findStopByToFrom(stopObj);
+        if(existToFrom)
+            return new AppResponse("", "SMS From "+from+" to "+to+" blocked by STOP request.");
+                
         // Check counter if less than 50
         if(stopRepository.getCounter(stopObj) >= 50)
             return new AppResponse("", "Limit Reached for from: "+from);

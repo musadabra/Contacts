@@ -51,14 +51,21 @@ public class StopRepository {
         return template.opsForHash().delete(stop.getId(), stop.getFrom());
     }
 
-    public boolean findStopByToFrom(String stopId) {
-        return template.opsForHash().values(stopId).isEmpty();
+    public boolean findStopByToFrom(Stop stop) {
+        return template.opsForHash().lengthOfValue(stop.getId(), stop.getFrom()) > 0;
     }
     
     public int getCounter(Stop stop){
+        // Get the Hkey and increment counter.
 //        Object get = template.opsForHash().get(stop.getId(), stop.getFrom());
 //        return template.opsForHash().increment(stop.getId(), stop.getFrom(), 1);
         return 1;
+    }
+    
+    public void resetAllCounter(){
+        // Reset all counters after 24 hours.
+        // Get all keys, 
+            // loop through and set counter to 0
     }
     
     public void checkCounterAndIncrement(Stop stop) {
