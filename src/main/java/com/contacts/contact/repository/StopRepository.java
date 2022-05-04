@@ -5,8 +5,11 @@
 package com.contacts.contact.repository;
 
 import com.contacts.contact.model.Stop;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +30,17 @@ public class StopRepository {
     private static final Logger LOG = Logger.getLogger(StopRepository.class.getName());
     
     public Stop save(Stop stop){
-        try {
-            template.opsForHash().put(stop.getId(), stop.getFrom(), stop.getTo());
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, null, "Failed to save to redis.");
-        }
+        template.opsForHash().put(stop.getId(), stop.getFrom(), stop.getTo());
         return stop;
     }
     
-    public List<String> findAll(){
-        List<String> allValues = new ArrayList<>();
-        try {
-            allValues = template.opsForHash().values(HASH_KEY);
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, null, "Failed to fetch all from redis.");
-        }
-        return allValues;
+    public Stop saveWithExpiration(Stop stop){
+        // Save data.
+        template.opsForHash().put(stop.getId(), stop.getFrom(), stop.getTo());
+        // Set expiration time
+        long expirationTimeHours = 60*60*4;
+        template.expire(stop.getId(), expirationTimeHours, TimeUnit.SECONDS);
+        return stop;
     }
     
     public String findStopByFrom(Stop stop){
@@ -51,5 +49,19 @@ public class StopRepository {
     
     public long deleteStop(Stop stop){
         return template.opsForHash().delete(stop.getId(), stop.getFrom());
+    }
+
+    public boolean findStopByToFrom(String stopId) {
+        return template.opsForHash().values(stopId).isEmpty();
+    }
+    
+    public int getCounter(Stop stop){
+//        Object get = template.opsForHash().get(stop.getId(), stop.getFrom());
+//        return template.opsForHash().increment(stop.getId(), stop.getFrom(), 1);
+        return 1;
+    }
+    
+    public void checkCounterAndIncrement(Stop stop) {
+        template.opsForHash().increment(stop.getId(), stop.getFrom(), 1);
     }
 }

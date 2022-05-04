@@ -16,7 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  *
- * @author dell
+ * @author Musa Dabra
  */
 @Configuration
 @EnableRedisRepositories

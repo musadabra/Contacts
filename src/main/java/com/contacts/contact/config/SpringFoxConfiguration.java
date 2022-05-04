@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  *
- * @author dell
+ * @author Musa Dabra
  */
 @Configuration
 @EnableSwagger2
@@ -27,16 +27,16 @@ public class SpringFoxConfiguration extends WebMvcConfigurationSupport {
 	public Docket productApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.redis.Redis.controller")).build()
+				.apis(RequestHandlerSelectors.basePackage("com.contacts.contact.controller")).build()
 				.apiInfo(metaData());
 
 	}
 
 	private ApiInfo metaData() {
 		return new ApiInfoBuilder()
-				.title("Spring Boot Redis Cache")
-				.description("\"Spring Boot REST API for Spring Boot Redis Cache\"")
-				.version("0.0.1")
+				.title("Contacts")
+				.description("\"Spring Boot REST API for Contacts, Caching, Validation etc.\"")
+				.version("1.0")
 				//.license("Apache License Version 2.0")
 				//.licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
 				.contact("Name: Musa Dabra "+" Github: https://github.com/musadabra"+" Email: musadabra@gmail.com")
