@@ -8,11 +8,9 @@ import com.contacts.contact.model.UserMessage;
 import com.contacts.contact.repository.PhoneNumberRepository;
 import com.contacts.contact.repository.StopRepository;
 import com.contacts.contact.repository.UserAccountRepository;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
 import org.springframework.stereotype.Service;
 
 @Service
