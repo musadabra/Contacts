@@ -92,6 +92,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+                                        <finalName>contacts</finalName>
 				</configuration>
 			</plugin>
 		</plugins>
