@@ -2,6 +2,8 @@
 This application is built using Java Spring boot, PostgreSQl, and Redis.
 Its deployed on AWS EC2 instance using Docker, also PostgreSQL and Redis are being installed using the docker images form docker hub.
 Please find below Dependencies, deployment process, and work through on some of the key aspect of the project.
+*Deployed Version on AWS: https://35.171.62.145:8088/api/<endpoint>
+*Deployed Version API Documentation: https://35.171.62.145:8088/swagger-ui.html
 *Note this project runs on port: 8088
 *Incase you want to quickly access endpoint with documentation visit 127.0.0.1:8088/swagger-ui.html on your browser after running the project.
 
@@ -30,5 +32,24 @@ End points and documentation can be found by visiting http://127.0.0.1:8088/swag
 The above image shows the username and password field need for our API authentication. To access the authentication form on postman, choose the authorization tab, and select Basic Auth.
 ### Inbound SMS
 Set method to POST - and enter the following url
-http://127.0.0.1:8088/api/inbound
+http://127.0.0.1:8088/api/inbound/sms
+
+Payload
+{
+  "from":"0982372398",
+  "to":"47343892392",
+  "text":"STOP"
+}
+
+### Outbound SMS
+Set method to POST - and enter the following url
+http://127.0.0.1:8088/api/outbound/sms
+
+Payload
+{
+  "from":"0982372398",
+  "to":"47343892392",
+  "text":"Hello India."
+}
+
 
