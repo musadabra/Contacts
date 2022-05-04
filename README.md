@@ -6,7 +6,8 @@ Please find below Dependencies, deployment process, and work through on some of 
 *Deployed Version on AWS: https://35.171.62.145:8088/api/<endpoint>
 </pre>
 <pre>
-*Deployed Version API Documentation: https://35.171.62.145:8088/swagger-ui.html
+*Deployed Version API Documentation, this page would require login details ( username: azr1, password: 20S0KPNOIM ):
+ https://35.171.62.145:8088/swagger-ui.html
 </pre>
 <pre>
 *Note this project runs on port: 8088
