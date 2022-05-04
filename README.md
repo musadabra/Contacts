@@ -2,11 +2,18 @@
 This application is built using Java Spring boot, PostgreSQl, and Redis.
 Its deployed on AWS EC2 instance using Docker, also PostgreSQL and Redis are being installed using the docker images form docker hub.
 Please find below Dependencies, deployment process, and work through on some of the key aspect of the project.
+<pre>
 *Deployed Version on AWS: https://35.171.62.145:8088/api/<endpoint>
+</pre>
+<pre>
 *Deployed Version API Documentation: https://35.171.62.145:8088/swagger-ui.html
+</pre>
+<pre>
 *Note this project runs on port: 8088
+</pre>
+<pre>
 *Incase you want to quickly access endpoint with documentation visit 127.0.0.1:8088/swagger-ui.html on your browser after running the project.
-
+</pre>
 ## Dependencies/technologies required
 -Java development kit(Jdk) 17
 -Netbeans or Intellij IDE.
